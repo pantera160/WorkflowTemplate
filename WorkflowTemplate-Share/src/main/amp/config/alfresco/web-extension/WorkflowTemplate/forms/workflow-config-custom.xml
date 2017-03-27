@@ -1,0 +1,122 @@
+<alfresco-config>
+    <config evaluator="string-compare" condition="activiti$myProcess">
+        <forms>
+            <form>
+                <field-visibility>
+                    <show id="bpm:workflowDescription"/>
+                    <show id="bpm:workflowDueDate"/>
+                    <show id="bpm:workflowPriority"/>
+                    <show id="dwf:startDate"/>
+                    <show id="dwf:endDate"/>
+                    <show id="dwf:plannedDate"/>
+                    <show id="dwf:extended"/>
+                    <show id="packageItems"/>
+                </field-visibility>
+                <appearance>
+                    <set id="" appearance="title" label-id="workflow.set.general"/>
+                    <set id="info" appearance="" template="/org/alfresco/components/form/2-column-set.ftl"/>
+                    <set id="items" appearance="title"/>
+
+                    <field id="bpm:workflowDescription" label-id="workflow.field.message">
+                        <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                            <control-param name="style">width: 95%</control-param>
+                        </control>
+                    </field>
+                    <field id="bpm:workflowDueDate" label-id="workflow.field.due" set="info">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="bpm:workflowPriority" label-id="workflow.field.priority" set="info">
+                        <control template="/org/alfresco/components/form/controls/workflow/priority.ftl"/>
+                    </field>
+                    <field id="dwf:startDate" set="info" label-id="label.startdate">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="dwf:endDate" set="info" label-id="label.enddate">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="dwf:plannedDate" set="info" label-id="label.planneddate">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="dwf:extended" set="info" label-id="label.extended" />
+                    <!-- <field id="bpm:assignee" label-id="workflow.field.reviewer" set="assignee" /> -->
+                    <field id="packageItems" set="items" mandatory="true"/>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+
+    <config evaluator="string-compare" condition="dwf:review">
+        <forms>
+            <form>
+                <field-visibility>
+                    <show id="bpm:workflowDescription"/>
+                    <show id="bpm:workflowDueDate"/>
+                    <show id="bpm:workflowPriority"/>
+                    <!-- <show id="bpm:assignee" /> -->
+                    <show id="dwf:startDate"/>
+                    <show id="dwf:endDate"/>
+                    <show id="dwf:plannedDate"/>
+                    <show id="dwf:extended"/>
+                    <show id="packageItems"/>
+                    <!-- <show id="policywf:pubfolder"/> -->
+                </field-visibility>
+                <appearance>
+                    <set id="" appearance="title" label-id="workflow.set.general"/>
+                    <set id="info" appearance="" template="/org/alfresco/components/form/2-column-set.ftl"/>
+                    <set id="items" appearance="title"/>
+
+                    <field id="bpm:workflowDescription" label-id="workflow.field.message">
+                        <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                            <control-param name="style">width: 95%</control-param>
+                        </control>
+                    </field>
+                    <field id="bpm:workflowDueDate" label-id="workflow.field.due" set="info">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="bpm:workflowPriority" label-id="workflow.field.priority" set="info">
+                        <control template="/org/alfresco/components/form/controls/workflow/priority.ftl"/>
+                    </field>
+                    <field id="dwf:startDate" set="info" label-id="label.startdate">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="dwf:endDate" set="info" label-id="label.enddate">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="dwf:plannedDate" set="info" label-id="label.planneddate">
+                        <control template="/org/alfresco/components/form/controls/date.ftl">
+                            <control-param name="showTime">false</control-param>
+                            <control-param name="submitTime">false</control-param>
+                        </control>
+                    </field>
+                    <field id="dwf:extended" set="info" label-id="label.extended" />
+                    <!-- <field id="bpm:assignee" label-id="workflow.field.reviewer" set="assignee" /> -->
+                    <field id="packageItems" set="items" mandatory="true"/>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+
+
+
+</alfresco-config>

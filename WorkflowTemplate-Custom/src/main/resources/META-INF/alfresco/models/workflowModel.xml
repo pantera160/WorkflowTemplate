@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="dwf:demoWFModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+    <description>DemoWF Model</description>
+    <version>1.0</version>
+
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <import uri="http://www.alfresco.org/model/workflow/1.0" prefix="wf"/>
+    </imports>
+
+    <namespaces>
+        <namespace uri="http://eu.xenit.demo/model/workflow/1.0" prefix="dwf"/>
+    </namespaces>
+
+
+    <types>
+
+        <type name="dwf:review">
+            <parent>wf:submitReviewTask</parent>
+            <mandatory-aspects>
+                <aspect>dwf:extension</aspect>
+                <aspect>dwf:dates</aspect>
+            </mandatory-aspects>
+        </type>
+    </types>
+
+    <aspects>
+        <aspect name="dwf:dates">
+            <properties>
+                <property name="dwf:startDate">
+                    <title>Start date</title>
+                    <type>d:date</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="dwf:endDate">
+                    <title>End date</title>
+                    <type>d:date</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="dwf:plannedDate">
+                    <title>Planned Date</title>
+                    <type>d:date</type>
+                    <mandatory>false</mandatory>
+                </property>
+            </properties>
+        </aspect>
+        <aspect name="dwf:extension">
+            <title>Extension</title>
+            <properties>
+                <property name="dwf:extended">
+                    <title>Extended task</title>
+                    <type>d:boolean</type>
+                    <mandatory>true</mandatory>
+                </property>
+            </properties>
+        </aspect>
+    </aspects>
+
+
+</model>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>WorkflowTemplate</artifactId>
+        <groupId>eu.xenit</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>WorkflowTemplate-Custom</artifactId>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+        <!-- Alfresco -->
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-core</artifactId>
+            <version>${alfresco.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-repository</artifactId>
+            <version>${alfresco.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-data-model</artifactId>
+            <version>${alfresco.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Alfresco OAS -->
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-enterprise-remote-api</artifactId>
+            <version>5.0.2.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.alfresco.officeservices</groupId>
+            <artifactId>aoservices</artifactId>
+            <version>2.12.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.alfresco.officeservices</groupId>
+            <artifactId>docproc</artifactId>
+            <version>2.12.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Dynamic Extensions for Alfresco -->
+        <!-- Provides annotations for annotation-based Actions, Behaviours and Web Scripts. The annotation approach is specific to Dynamic Extensions. -->
+        <dependency>
+            <groupId>com.github.dynamicextensionsalfresco</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${dynamicextensions.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dynamicextensionsalfresco</groupId>
+            <artifactId>webscripts</artifactId>
+            <version>${dynamicextensions.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dynamicextensionsalfresco</groupId>
+            <artifactId>annotations-runtime</artifactId>
+            <version>${dynamicextensions.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dynamicextensionsalfresco</groupId>
+            <artifactId>alfresco-integration</artifactId>
+            <version>${dynamicextensions.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- Provides the java.inject.Inject annotation. This library comes bundled with Dynamic Extensions. In general you should NOT change the version. -->
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- Provides the javax.annotations.ManagedBean annotation. This library is also bundled with Dynamic Extensions. In general you should also NOT change the version. -->
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-annotation_1.1_spec</artifactId>
+            <version>1.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.extensions.surf</groupId>
+            <artifactId>spring-webscripts</artifactId>
+            <version>${spring-webscripts.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- OSGI -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Logger -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Xenit -->
+        <!--
+        <dependency>
+            <groupId>com.rezidor</groupId>
+            <artifactId>xenit-lib</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        -->
+        <!-- Rezidor -->
+        <dependency>
+            <groupId>com.rezidor</groupId>
+            <artifactId>rezidor-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>artifactory.xenit.eu</id>
+            <url>https://artifactory.xenit.eu/artifactory/libs-release</url>
+        </repository>
+    </repositories>
+</project>

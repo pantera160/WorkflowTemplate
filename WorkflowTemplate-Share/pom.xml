@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.alfresco.maven</groupId>
+        <artifactId>alfresco-sdk-parent</artifactId>
+        <version>2.1.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>amp</packaging>
+
+    <artifactId>WorkflowTemplate-Share</artifactId>
+
+    <properties>
+        <!-- The following are default values for data location and Alfresco version.
+             Uncomment if you need to change
+        <alfresco.version>${alfresco.community.default.version}</alfresco.version> -->
+        <alfresco.version>5.0.3</alfresco.version>
+
+        <app.log.root.level>WARN</app.log.root.level>
+        <maven.alfresco.ampBuildDirectory>${project.build.directory}/${project.build.finalName}</maven.alfresco.ampBuildDirectory>
+
+
+        <!-- Set the enviroment to use, this controls which properties will be picked in src/test/properties
+             for embedded run, defaults to the 'local' environment. See SDK Parent POM for more info.
+        <env>other environment name</env>
+        -->
+
+        <!-- The Maven artifact ID to use when loading the Share.WAR that the AMP should be applied to,
+                    defaults to the alfresco.war artifact ID, so we need to override here. -->
+        <app.amp.client.war.artifactId>${alfresco.share.artifactId}</app.amp.client.war.artifactId>
+
+        <!-- Since Alfresco.WAR (i.e. the Repository) is already running on port 8080, we run Share.WAR on port 8081 -->
+        <maven.tomcat.port>8081</maven.tomcat.port>
+
+        <!-- Used in workflow-config-custom.xml. By default points to local installation of Alfresco Repo -->
+        <alfresco.repo.url>https://rezidor-test.dev.xenit.eu/alfresco</alfresco.repo.url>
+
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>artifactory.xenit.eu</id>
+            <url>https://artifactory.xenit.eu/artifactory/libs-release</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>artifactory-plugins-releases</id>
+            <url>https://artifactory.xenit.eu/artifactory/plugins-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+    <!-- Here we realize the connection with the Alfresco selected platform
+        (e.g.version and edition) -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- This will import the dependencyManagement for all artifacts in the selected Alfresco version/edition
+                (see http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies)
+                NOTE: You still need to define dependencies in your POM, but you can omit version as it's enforced by this dependencyManagement. NOTE: It defaults
+                to the latest version this SDK pom has been tested with, but alfresco version can/should be overridden in your project's pom -->
+            <dependency>
+                <groupId>org.alfresco</groupId>
+                <artifactId>alfresco-platform-distribution</artifactId>
+                <version>${alfresco.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>share</artifactId>
+            <version>${alfresco.version}</version>
+            <classifier>classes</classifier>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.extensions.surf</groupId>
+            <artifactId>spring-surf-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <!-- AMP specific resources -->
+            <resource>
+                <directory>src/main/amp</directory>
+                <targetPath>../${project.build.finalName}</targetPath>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- Compress JavaScript files and store as *-min.js -->
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>yuicompressor-maven-plugin</artifactId>
+                <version>1.5.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.alfresco.maven.plugin</groupId>
+                <artifactId>alfresco-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--
+            Brings in the extra Enterprise specific share classes,
+            if the 'enterprise' profile has been activated, needs to be activated manually. -->
+        <profile>
+            <id>enterprise</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.alfresco</groupId>
+                    <artifactId>share-enterprise</artifactId>
+                    <version>${alfresco.version}</version>
+                    <classifier>classes</classifier>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>unpack-deps</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-amps</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>unpack-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <includeTypes>amp</includeTypes>
+                                    <outputDirectory>${app.amp.client.war.folder}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.alfresco.maven.plugin</groupId>
+                                <artifactId>maven-amp-plugin</artifactId>
+                                <version>3.0.2</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>
